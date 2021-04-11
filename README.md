@@ -36,13 +36,13 @@ ds.create(key, value, timeToLive).then((res) => {
 ```
 
 *Output:*
-`
+```
 {
 	firstName:'John',
 	lastName:'Doe',
 	age: 21
 }
-`
+```
 
 ### 2. Read
 ```
