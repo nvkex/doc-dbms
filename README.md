@@ -32,7 +32,10 @@ const timeToLive = 120;
 // Add entry to store
 ds.create(key, value, timeToLive).then((res) => {
     console.log(res);
-});
+})
+.catch(err => {
+	console.log(err)
+});;
 ```
 
 *Output:*
@@ -51,6 +54,9 @@ const key = "info";
 
 ds.read(key).then(res => {
 	console.log(res);
+})
+.catch(err => {
+	console.log(err)
 });
 ```
 
@@ -70,7 +76,10 @@ const key = "info";
 
 ds.delete(key).then(res => {
 	console.log(res);
-});
+})
+.catch(err => {
+	console.log(err)
+});;
 ```
 
 *Output:*
