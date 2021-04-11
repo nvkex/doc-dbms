@@ -1,4 +1,4 @@
-const { MAX_KEY_LENGTH } =  require("../constants");
+const { MAX_KEY_LENGTH } =  require("../constants/constants");
 
 
 const validateKeySize = (key) => {

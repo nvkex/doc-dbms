@@ -1,4 +1,4 @@
-const { MAX_BUFFER_LENGTH } =  require("../constants");
+const { MAX_BUFFER_LENGTH } =  require("../constants/constants");
 
 const checkValueSize = (value) => {
     const size = Buffer.byteLength(JSON.stringify(value)) / 1024;

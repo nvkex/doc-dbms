@@ -1,4 +1,4 @@
-const { MAX_STORE_SIZE } =  require("../constants");
+const { MAX_STORE_SIZE } =  require("../constants/constants");
 
 const formatData = (content) => {
     if (!content)
