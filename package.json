@@ -8,12 +8,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nvkex/nosql-dbms.git"
+    "url": "git+https://github.com/nvkex/doc-dbms.git"
   },
   "author": "nvkex",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/nvkex/nosql-dbms/issues"
+    "url": "https://github.com/nvkex/doc-dbms/issues"
   },
-  "homepage": "https://github.com/nvkex/nosql-dbms#readme"
+  "homepage": "https://github.com/nvkex/doc-dbms#readme"
 }
