@@ -6,6 +6,8 @@
 
 ## Usage
 
+*Create the folder first where the store will be initialized*
+
 ### 0. Initialize
 ```
 // Import Module
