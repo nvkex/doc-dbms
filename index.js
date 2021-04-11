@@ -1,5 +1,5 @@
 // Constants
-const { DEFAULT_PATH, STORE_NAME } = require('./constants');
+const { DEFAULT_PATH, STORE_NAME } = require('./constants/constants');
 const { readFromStore, initStore, writeToStore } = require('./fileOps');
 
 // Validators
@@ -49,11 +49,19 @@ class DataStorage {
         var data = await readFromStore(this.path);
 
         // Check if key exists
-        if (data[key])
-            throw "Key already exists!"
+        if (data[key]) {
+            try {
+                if (validateKeyLife(data[key]))
+                    throw "Key already exists!"
+            }
+            catch {
+                delete data[key];
+            }
+        }
+
 
         // Add key to store
-        data[key] = { ...value, timeToLive: ttl, iat: parseInt(new Date().getTime()/1000) };
+        data[key] = { ...value, timeToLive: ttl, iat: parseInt(new Date().getTime() / 1000) };
 
         // Validate store size
         validateStoreSize(data);
