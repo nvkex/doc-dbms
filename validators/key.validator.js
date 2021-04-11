@@ -12,13 +12,13 @@ const validateKeyLife = (data) => {
     if(!data)
         throw "Key doesn't exist in store!";
     if(data.timeToLive == null)
-        return 
+        return true;
     
     const currentTime = parseInt(new Date().getTime()/1000);
     if(currentTime - data.iat > data.timeToLive)
         throw "Key expired. Cannot operate on this key."
     else
-        return true
+        return true;
 }
 
 module.exports = {

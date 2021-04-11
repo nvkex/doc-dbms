@@ -1,4 +1,4 @@
-const { formatData } = require('./validators/store.validator');
+const { formatData } = require('../validators/store.validator');
 const fs = require('fs');
 
 /**
