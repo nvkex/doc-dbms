@@ -1,6 +1,6 @@
 // Constants
 const { DEFAULT_PATH, STORE_NAME } = require('./constants/constants');
-const { readFromStore, initStore, writeToStore } = require('./fileOps');
+const { readFromStore, initStore, writeToStore } = require('./utils/fileOps');
 
 // Validators
 const { validateKeySize, validateKeyLife } = require('./validators/key.validator');
@@ -39,8 +39,16 @@ class DataStorage {
     async create(key, value, ttl = null) {
 
         // Validate key and value
-        validateKeySize(key);
-        checkValueSize(value);
+        try {
+            validateKeySize(key);
+            checkValueSize(value);
+        }
+        catch (err) {
+            return new Promise((resolve, reject) => {
+                reject(err)
+            });
+        }
+
 
         // Connect to Store
         await this.connect();
@@ -51,8 +59,13 @@ class DataStorage {
         // Check if key exists
         if (data[key]) {
             try {
-                if (validateKeyLife(data[key]))
-                    throw "Key already exists!"
+                if (validateKeyLife(data[key])) {
+                    // Return promise
+                    return new Promise((resolve, reject) => {
+                        reject("Key already exists!")
+                    });
+
+                }
             }
             catch {
                 delete data[key];
@@ -63,11 +76,18 @@ class DataStorage {
         // Add key to store
         data[key] = { ...value, timeToLive: ttl, iat: parseInt(new Date().getTime() / 1000) };
 
-        // Validate store size
-        validateStoreSize(data);
-
-        // Write data to store
-        await writeToStore(data, this.path);
+        
+        try {
+            // Validate store size
+            validateStoreSize(data);
+            // Write data to store
+            await writeToStore(data, this.path);
+        }
+        catch (err) {
+            return new Promise((resolve, reject) => {
+                reject(err)
+            });
+        }
 
         // Return key without system defined variables
         delete data[key].timeToLive;
@@ -100,7 +120,15 @@ class DataStorage {
         var data = await readFromStore(this.path);
 
         // Validate key expiry
-        validateKeyLife(data[key]);
+        try{
+            validateKeyLife(data[key]);
+        }
+        catch(err){
+            return new Promise((resolve, reject) => {
+                reject(err)
+            });
+        }
+        
 
         // Return key without system defined variables
         delete data[key].timeToLive;
@@ -132,13 +160,27 @@ class DataStorage {
         var data = await readFromStore(this.path);
 
         // Validate key expiry
-        validateKeyLife(data[key]);
+        try{
+            validateKeyLife(data[key]);
+        }
+        catch(err){
+            return new Promise((resolve, reject) => {
+                reject(err)
+            });
+        }
 
         // Delete key from data
         delete data[key];
 
         // Write new data to store
-        await writeToStore(data, this.path);
+        try {
+            await writeToStore(data, this.path);
+        }
+        catch (err) {
+            return new Promise((resolve, reject) => {
+                reject(err)
+            });
+        }
 
         // Return Promise
         return new Promise((resolve, reject) => {
